@@ -1,4 +1,4 @@
-package estruturadados;
+package datastructure;
 
 public class Node {
 
