@@ -76,6 +76,22 @@ public class BinarySearch {
         return buildBalancedTreeNode(ordered, 0, ordered.size() -1);
     }
 
+
+    public int nodeSum(Node root, int l, int r)  {
+        if(root == null) return 0;
+
+        if(root.data < l) {
+            return nodeSum(root.right, l, r);
+        }
+        if(root.data > r) {
+            return nodeSum(root.left, l, r);
+        }
+        int leftSum = nodeSum(root.left, l, r);
+        int rightSum = nodeSum(root.right, l, r);
+
+        return leftSum + rightSum + root.data;
+    }
+
     public static void main(String[] args) {
         BinarySearch binarySearch = new BinarySearch();
         ArrayList<Integer> list = new ArrayList<>();
@@ -89,12 +105,9 @@ public class BinarySearch {
 
         binarySearch.inorder_traversal(root, list);
         System.out.println(list);
-//		Node search = binarySearch.search(99, root);
 
-//		System.out.println(search.data + " " + root.data);
+        System.out.println(binarySearch.nodeSum(root, 99, 102));
+        System.out.println(binarySearch.nodeSum(root, 50, 101));
 
-//        binarySearch.inorder_traversal(root);
-
-        System.out.println(9 / 2);
     }
 }
