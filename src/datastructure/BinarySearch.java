@@ -42,16 +42,8 @@ public class BinarySearch {
 
     public Node search(int n, Node root) {
 
-        if(root == null) {
-            throw new RuntimeException("Number not exists in tree");
-        }
-        if (n == root.data) {
-            return root;
-        } else if (n < root.data) {
-            root = search(n, root.left);
-        } else {
-            root = search(n, root.right);
-        }
+        if (n < root.data)      return search(n, root.left);
+        else if (n > root.data) return search(n, root.right);
         return root;
     }
 
@@ -103,11 +95,12 @@ public class BinarySearch {
             root = binarySearch.insert(root, array[i]);
         }
 
-        binarySearch.inorder_traversal(root, list);
-        System.out.println(list);
+//        binarySearch.inorder_traversal(root, list);
 
-        System.out.println(binarySearch.nodeSum(root, 99, 102));
-        System.out.println(binarySearch.nodeSum(root, 50, 101));
+         root = binarySearch.balanceBST(root);
+
+        System.out.println(binarySearch.search(0, root).data);
+
 
     }
 }
