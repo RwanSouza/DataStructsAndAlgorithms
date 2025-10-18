@@ -1,4 +1,4 @@
-package datastructure;
+package org.datastructure;
 
 public class Node {
 

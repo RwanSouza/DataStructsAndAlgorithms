@@ -1,11 +1,15 @@
-### IntelliJ IDEA ###
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+target/
+our/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 .kotlin
-.class
-.idea
 
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+.idea/
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -13,10 +17,7 @@ out/
 .project
 .settings
 .springBeans
-.sts4-cacheq
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+.sts4-cache
 
 ### NetBeans ###
 /nbproject/private/
@@ -24,6 +25,9 @@ bin/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
