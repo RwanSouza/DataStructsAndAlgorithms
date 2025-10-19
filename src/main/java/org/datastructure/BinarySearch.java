@@ -40,20 +40,22 @@ public class BinarySearch {
         }
     }
 
-    public  void preOrder(Node root) {
+    public  void preOrder(Node root, ArrayList<Integer> nodes) {
         if(root != null) {
             System.out.print(root.data + " ");
-            preOrder(root.left);
-            preOrder(root.right);
+            nodes.add(root.data);
+            preOrder(root.left, nodes);
+            preOrder(root.right, nodes);
 
         }
     }
 
-    public void postOrder(Node root) {
+    public void postOrder(Node root, ArrayList<Integer> nodes) {
         if(root != null) {
 
-            postOrder(root.left);
-            postOrder(root.right);
+            postOrder(root.left, nodes);
+            postOrder(root.right, nodes);
+            nodes.add(root.data);
             System.out.print(root.data + " ");
         }
     }
@@ -100,28 +102,5 @@ public class BinarySearch {
         int rightSum = nodeSum(root.right, l, r);
 
         return leftSum + rightSum + root.data;
-    }
-
-    public static void main(String[] args) {
-        BinarySearch binarySearch = new BinarySearch();
-        ArrayList<Integer> list = new ArrayList<>();
-
-//        int[] array = { 34, 84, 15, 0, 2, 99, 79, 9, 88, 89, 18, 31, 39, 100, 101 };
-        int[] array = {100, 200, 20, 10, 30, 150, 300};
-
-        Node root = null;
-        for (int i : array) {
-            root = binarySearch.insert(root, i);
-        }
-
-//        binarySearch.inorder_traversal(root, list);
-
-//         root = binarySearch.balanceBST(root);
-
-        binarySearch.preOrder(root);
-        System.out.println();
-        binarySearch.postOrder(root);
-
-
     }
 }
