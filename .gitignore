@@ -18,7 +18,8 @@ our/
 .settings
 .springBeans
 .sts4-cache
-
+bin/
+classes/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
