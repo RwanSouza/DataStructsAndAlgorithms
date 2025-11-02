@@ -1,6 +1,8 @@
 package org.datastructure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BinarySearch {
 
@@ -67,7 +69,7 @@ public class BinarySearch {
         return root;
     }
 
-    public Node buildBalancedTreeNode(ArrayList<Integer> nodes, int start, int end ) {
+    private Node buildBalancedTreeNode(ArrayList<Integer> nodes, int start, int end ) {
 
         if(start > end )
             return null;
@@ -103,4 +105,39 @@ public class BinarySearch {
 
         return leftSum + rightSum + root.data;
     }
+    
+	public int countNodes(Node root, int count) {
+
+	    if(root == null) return count;
+		
+	    count++;
+	    count = countNodes(root.left, count);
+	    count = countNodes(root.right, count);
+
+		return count;
+	}
+	
+	public int medianBst(Node root) {
+		int lenNodes = this.countNodes(root, 0);
+		int medianPosition = lenNodes % 2 == 1 ? ( lenNodes + 1) / 2 : lenNodes / 2;
+		
+		AtomicInteger results  = new AtomicInteger(-1);
+		
+		medianBst(root, medianPosition, new AtomicInteger(), results );
+		
+		return results.get();
+	}
+	
+	private void medianBst(Node root, int position, AtomicInteger counter, AtomicInteger median) {
+		if (root == null)
+			return;
+
+			
+		medianBst(root.left, position, counter, median);
+		counter.getAndIncrement();
+		if(counter.get() == position) {
+			median.set(root.data);
+		}	
+		medianBst(root.right, position, counter, median);
+	}
 }
