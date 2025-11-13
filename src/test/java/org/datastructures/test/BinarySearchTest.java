@@ -5,10 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.datastructure.BinarySearch;
 import org.datastructure.Node;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BinarySearchTest {
@@ -81,7 +83,26 @@ public class BinarySearchTest {
 		
 		assertEquals(n[indexMedian - 1], medianBst);
 		
-		
+	}
+	
+	@Test
+	@DisplayName("This case covers deletion with children left and right")
+	void shouldDeleteNodeWithTwoChildrenCorrectly() {
+		int[] n = { 61, 43, 89, 66, 100, 90, 79, 77, 80, 43, 16, 11, 51, 55 };
+		insertValues(n);
+		Node delete = bst.delete(root, 89);
+
+		ArrayList<Integer> result = new ArrayList<>();
+
+		bst.inorder_traversal(delete, result);
+
+		int[] output = { 61, 43, 66, 100, 90, 79, 77, 80, 43, 16, 11, 51, 55 };
+		Arrays.sort(output);
+
+		List<Integer> outputExpected = Arrays.stream(output).boxed().collect(Collectors.toList());
+
+		assertEquals(outputExpected, result);
+
 	}
 
 	void insertValues(int[] values) {
