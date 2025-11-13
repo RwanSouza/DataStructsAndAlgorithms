@@ -140,4 +140,30 @@ public class BinarySearch {
 		}	
 		medianBst(root.right, position, counter, median);
 	}
+	
+	private Node getSuccerssor (Node curr) {
+		curr = curr.right;
+        while (curr != null && curr.left != null) {
+            curr = curr.left;
+        }
+        return curr;
+	}
+	
+	public Node delete(Node root, int value) {
+		
+		if(value < root.data)
+			root.left = delete(root.left, value);
+		else if(value > root.data)
+			root.right = delete(root.right, value);
+		else {
+			if(root.left == null )  return root.right;
+			if(root.right == null)  return root.left;
+			
+			Node succ = getSuccerssor(root);
+			root.data = succ.data;
+			root.right = delete(root.right, succ.data);
+		}
+				
+		return root;
+	}
 }
