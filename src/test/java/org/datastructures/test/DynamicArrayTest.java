@@ -2,6 +2,7 @@ package org.datastructures.test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.stream.IntStream;
 
@@ -21,14 +22,13 @@ public class DynamicArrayTest {
 
 	@Test
 	void shouldInsertAllElementsCorrectly() {
-		DynamicArray d = new DynamicArray();
 
 		int[] elementsToInsert = IntStream.rangeClosed(1, MAX_ELEMENTS_TO_INSERT).toArray();
 		
 		for (int e : elementsToInsert)
 			dynamicArray.insert(e);
 
-		assertArrayEquals(elementsToInsert, d.getArrayCopy());
+		assertArrayEquals(elementsToInsert, dynamicArray.getArrayCopy());
 	}
 
 	@Test
@@ -41,8 +41,35 @@ public class DynamicArrayTest {
 		final int expectedSize = elementsToInsert.length;
 		final int expectedCapacity = calculateCapacity(expectedSize);
 		
-		assertEquals(expectedCapacity, dynamicArray.getDynamicCapacity());
+		assertEquals(expectedCapacity, dynamicArray.capacity());
 		assertEquals(expectedSize, dynamicArray.getSize());
+	}
+	
+	@Test 
+	void shouldDeleteElementsAndReduceSizeCorrectly() {
+		int[] elementsToInsert = IntStream.rangeClosed(1, 5).toArray();
+		for (int e : elementsToInsert)
+			dynamicArray.insert(e);
+		
+		dynamicArray.delete(4);
+		dynamicArray.delete(1);
+		dynamicArray.delete(2);
+		
+		int[] expectedArray = {3,5};
+		assertEquals(expectedArray.length, dynamicArray.getSize());
+		assertArrayEquals(expectedArray, dynamicArray.getArrayCopy());
+	} 
+	
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenNotFindElement() {
+		
+		int[] elementsToInsert = IntStream.rangeClosed(1, 5).toArray();
+		for (int e : elementsToInsert)
+			dynamicArray.insert(e);
+		
+		IllegalArgumentException isNotInArray = assertThrows(IllegalArgumentException.class, () -> dynamicArray.delete(99));
+		
+		assertEquals("Unable to delete element 99: the entry is not in the array", isNotInArray.getMessage());
 	}
 
 	private static int calculateCapacity(int numberOfElements) {
