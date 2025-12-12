@@ -1,6 +1,8 @@
 package org.datastructures.test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +58,20 @@ public class SortedArrayTest {
 		 
 		 assertArrayEquals(IntStream.rangeClosed(-500, 499).toArray(), sortedArray.getArrayCopy());
 		 
+	}
+	
+	
+	@Test
+	@DisplayName("When the array reaches its limit, a RuntimeException is thrown")
+	void  shouldThrowErrorWhenReachingArrayLimit() {
+		RuntimeException overCapacity = assertThrows(RuntimeException.class, () -> {
+			int[] array = IntStream.rangeClosed(-500, 502).toArray();
+			 
+			for (int e : array)
+				 sortedArray.insert(e);
+		}); 
+		
+		assertTrue(overCapacity.getMessage().contains("The array is already full, maximum size"));
 	}
 
 	private int[] createArrayDisordered(int start, int end) {
