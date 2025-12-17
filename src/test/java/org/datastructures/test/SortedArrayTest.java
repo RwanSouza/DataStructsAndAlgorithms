@@ -1,6 +1,7 @@
 package org.datastructures.test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -72,6 +73,22 @@ public class SortedArrayTest {
 		}); 
 		
 		assertTrue(overCapacity.getMessage().contains("The array is already full, maximum size"));
+	}
+	
+	@Test
+	@DisplayName("Should return the index when the number exists and a negative value when it does not")
+	void shouldReturnIndexWhenNumberExistsAndNegativeOtherwise() {
+		int[] array = createArrayDisordered(-20, 20);
+		
+		for (int e : array)
+			 sortedArray.insert(e);
+		
+		assertEquals(0, sortedArray.search(-20));
+		assertEquals(20, sortedArray.search(0));
+		assertEquals(25, sortedArray.search(5));
+		assertEquals(-1, sortedArray.search(99));
+		assertEquals(-1, sortedArray.search(21));
+		
 	}
 
 	private int[] createArrayDisordered(int start, int end) {
