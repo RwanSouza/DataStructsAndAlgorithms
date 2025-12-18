@@ -13,6 +13,10 @@ public class SortedArray {
 	}
 	
 	
+	public int getSize() {
+		return this.size;
+	}
+	
 	public void insert(int value) {
 		
 		if(this.size >= maxSize) throw new RuntimeException("The array is already full, maximum size");	
