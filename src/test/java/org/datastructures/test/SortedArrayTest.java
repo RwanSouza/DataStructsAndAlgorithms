@@ -29,8 +29,7 @@ public class SortedArrayTest {
 	void shouldInsertPositiveElementsInOrder() {
 		int[] numbersDisordered = createArrayDisordered(1, 1000);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 
 		assertArrayEquals(IntStream.rangeClosed(1, 1000).toArray(), sortedArray.getArrayCopy());
 
@@ -41,8 +40,7 @@ public class SortedArrayTest {
 	void shouldInsertNegativeElementsInOrder() {
 		int[] numbersDisordered = createArrayDisordered(-1000, -1);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 
 		assertArrayEquals(IntStream.rangeClosed(-1000, -1).toArray(), sortedArray.getArrayCopy());
 
@@ -53,8 +51,7 @@ public class SortedArrayTest {
 	void shouldInsertNegativesAndPositivesElementsInOrder() {
 		int[] numbersDisordered = createArrayDisordered(-500, 499);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 
 		assertArrayEquals(IntStream.rangeClosed(-500, 499).toArray(), sortedArray.getArrayCopy());
 
@@ -64,10 +61,9 @@ public class SortedArrayTest {
 	@DisplayName("When the array reaches its limit, a RuntimeException is thrown")
 	void shouldThrowErrorWhenReachingArrayLimit() {
 		RuntimeException overCapacity = assertThrows(RuntimeException.class, () -> {
-			int[] array = IntStream.rangeClosed(-500, 502).toArray();
+			int[] numbersDisordered = IntStream.rangeClosed(-500, 502).toArray();
 
-			for (int e : array)
-				sortedArray.insert(e);
+			insert(numbersDisordered);
 		});
 
 		assertTrue(overCapacity.getMessage().contains("The array is already full, maximum size"));
@@ -76,10 +72,9 @@ public class SortedArrayTest {
 	@Test
 	@DisplayName("Should return the index when the number exists and a negative value when it does not")
 	void shouldReturnIndexWhenNumberExistsAndNegativeOtherwise() {
-		int[] array = createArrayDisordered(-20, 20);
+		int[] numbersDisordered = createArrayDisordered(-20, 20);
 
-		for (int e : array)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 
 		assertEquals(0, sortedArray.search(-20));
 		assertEquals(20, sortedArray.search(0));
@@ -94,8 +89,7 @@ public class SortedArrayTest {
 	void shouldDeleteElementAndShiftArray() {
 		int[] numbersDisordered = createArrayDisordered(1, 500);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 
 		int deletedValue = sortedArray.delete(19);
 
@@ -109,8 +103,7 @@ public class SortedArrayTest {
 	void shouldThrowExceptionWhenIndexIsNegative() {
 		int[] numbersDisordered = createArrayDisordered(1, 500);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 		
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
 			sortedArray.delete(-1);
@@ -126,12 +119,34 @@ public class SortedArrayTest {
 
 		int[] numbersDisordered = createArrayDisordered(1, 500);
 
-		for (int e : numbersDisordered)
-			sortedArray.insert(e);
+		insert(numbersDisordered);
 		
 		assertThrows(RuntimeException.class, () -> {
 			sortedArray.delete(invalidIndex);
 		});
+	}
+
+	@Test
+	@DisplayName("Should find elements and validate logarithmic search steps")
+	void shouldFindElementsAndValidateBinarySearchEfficiency() {
+		int[] numbersDisordered = createArrayDisordered(-10, 988);
+		
+		insert(numbersDisordered);
+		
+		int[] sorted = this.sortedArray.getArrayCopy();
+		
+		int expectedMaxSteps = (int) Math.ceil(Math.log(this.sortedArray.getSize()) / Math.log(2));
+		
+		assertEquals(788, sorted[this.sortedArray.binarySearch(788)]);
+		assertEquals(expectedMaxSteps, this.sortedArray.getSteps());
+		assertEquals(-9, sorted[this.sortedArray.binarySearch(-9)]);
+		assertEquals(expectedMaxSteps, this.sortedArray.getSteps());
+		assertEquals(-1, this.sortedArray.binarySearch(-11));
+	}
+	
+	private void insert(int[] numbersDisordered) {
+		for (int e : numbersDisordered)
+			sortedArray.insert(e);
 	}
 
 	private int[] createArrayDisordered(int start, int end) {
