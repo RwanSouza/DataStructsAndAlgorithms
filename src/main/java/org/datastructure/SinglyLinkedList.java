@@ -29,6 +29,20 @@ public class SinglyLinkedList {
 		}		
 	}
 	
+	public Integer search(int data) {
+		LinkedNode current = this.head;
+		
+		while(Objects.nonNull(current)) {
+			if (current.data() == data) 
+				return current.data();
+			
+			current = current.next();
+		}
+		
+		return null;
+	}
+	
+	
 	public void insertInFront(int data) {
 		LinkedNode oldHead = this.head;
 		this.head = new LinkedNode(data, oldHead); 
