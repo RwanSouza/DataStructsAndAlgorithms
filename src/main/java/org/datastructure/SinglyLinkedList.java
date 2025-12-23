@@ -42,7 +42,6 @@ public class SinglyLinkedList {
 		return null;
 	}
 	
-	
 	public void insertInFront(int data) {
 		LinkedNode oldHead = this.head;
 		this.head = new LinkedNode(data, oldHead); 

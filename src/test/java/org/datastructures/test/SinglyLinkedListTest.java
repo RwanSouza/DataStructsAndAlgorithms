@@ -12,20 +12,21 @@ import org.junit.jupiter.api.Test;
 public class SinglyLinkedListTest {
 
 	private SinglyLinkedList linkedList;
+	private int[] elements;
 	
 	@BeforeEach
 	public void createLinkedList() {
 		this.linkedList = new SinglyLinkedList();
+		this.elements = this.createArray(1, 10000);
 	}
 	
 	@Test
 	@DisplayName("Should correctly append a new node to the tail of the list")
 	void shouldAppendNodeToTail() {
-		int[] array = this.createArray(1, 10);
 		
-		for(int i = 0; i < array.length;  i++) {
-			linkedList.insertToBack(array[i]);
-			assertEquals(array[i], linkedList.tail());
+		for(int i = 0; i < elements.length;  i++) {
+			linkedList.insertToBack(elements[i]);
+			assertEquals(elements[i], linkedList.tail());
 		}
 	}
 	
@@ -33,14 +34,28 @@ public class SinglyLinkedListTest {
 	@Test
 	@DisplayName("Should correctly append a new node to the tail of the list")
 	void shouldAppendNodeToHead() {
-		int[] array = this.createArray(1, 10);
 		
-		for(int i = 0; i < array.length;  i++) {
-			linkedList.insertInFront(array[i]);
-			assertEquals(array[i], linkedList.head());
+		for(int i = 0; i < elements.length;  i++) {
+			linkedList.insertInFront(elements[i]);
+			assertEquals(elements[i], linkedList.head());
 		}
 	}
 	
+	@Test
+	@DisplayName("should find the value correctly when it exists in the linked list")
+	void shouldFindExistingElement() {
+		
+		for(int i = 0; i < elements.length;  i++) {
+			linkedList.insertInFront(elements[i]);
+			assertEquals(elements[i], linkedList.head());
+		}
+		
+		assertEquals(50 ,this.linkedList.search(50));
+		assertEquals(599 ,this.linkedList.search(599));
+		assertEquals(99 ,this.linkedList.search(99));
+		assertEquals(null, this.linkedList.search(-999));
+		
+	}
 	
 	private int[] createArray(int start, int end) {
 		return IntStream.rangeClosed(start, end).boxed().mapToInt(i -> i).toArray();
