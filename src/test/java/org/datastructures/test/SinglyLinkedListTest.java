@@ -1,6 +1,7 @@
 package org.datastructures.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.stream.IntStream;
 
@@ -55,6 +56,27 @@ public class SinglyLinkedListTest {
 		assertEquals(99 ,this.linkedList.search(99));
 		assertEquals(null, this.linkedList.search(-999));
 		
+	}
+	
+	@Test
+	@DisplayName("Should remove the node from the list when a valid value is provided")
+	void shouldDeleteNodeFromList() {
+		
+		for(int i = 0; i < elements.length;  i++) {
+			linkedList.insertInFront(elements[i]);
+		}
+		
+		linkedList.delete(1);
+		linkedList.delete(10);
+		linkedList.delete(10000);
+		
+		assertEquals(null , this.linkedList.search(1));
+		assertEquals(null , this.linkedList.search(10));
+		assertEquals(null , this.linkedList.search(10000));
+		
+		RuntimeException expectedMessage = assertThrows(RuntimeException.class, () -> this.linkedList.delete(1));
+		
+		assertEquals("No element with value 1 was found in the list", expectedMessage.getMessage());
 	}
 	
 	private int[] createArray(int start, int end) {
