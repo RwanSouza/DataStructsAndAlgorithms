@@ -79,6 +79,25 @@ public class SinglyLinkedListTest {
 		assertEquals("No element with value 1 was found in the list", expectedMessage.getMessage());
 	}
 	
+	
+	@Test
+	@DisplayName("Should remove value from the list when it exists")
+	void shouldDeleteNodeFromFrontList() {
+		
+		for(int i = 0; i < elements.length;  i++) {
+			linkedList.insertInFront(elements[i]);
+		}
+		
+		for( int i = elements.length -1; i >= 0 ; i--) {
+			assertEquals(elements[i] , this.linkedList.deleteFromFront());
+		}
+		
+		RuntimeException expectedMessage = assertThrows(RuntimeException.class, () -> this.linkedList.deleteFromFront());
+		assertEquals("No value  was found in the list", expectedMessage.getMessage());
+		
+	}
+	
+	
 	private int[] createArray(int start, int end) {
 		return IntStream.rangeClosed(start, end).boxed().mapToInt(i -> i).toArray();
 	}	
