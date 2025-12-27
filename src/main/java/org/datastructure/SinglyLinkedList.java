@@ -66,6 +66,18 @@ public class SinglyLinkedList {
 		throw new RuntimeException(MessageFormat.format("No element with value {0} was found in the list", target));
 
 	}
+	
+	public Integer  deleteFromFront() {
+		LinkedNode current = this.head;
+		
+		if(Objects.nonNull(current)) {
+			int data = this.head.data();
+			this.head = current.next();
+			return data;
+		} 
+		
+		throw new RuntimeException("No value  was found in the list");
+	}
 
 	public Integer tail() {
 		return Objects.nonNull(tail) ? tail.data() : null;
