@@ -7,11 +7,15 @@ public class SortedArray {
 	private int   maxSize = 1000;
 	private int   size = 0;
 	private int[] sortedArray;
+	private int lastExecutionSteps = 0;
 	
 	public  SortedArray() {
 		this.sortedArray = new int[maxSize];
 	}
 	
+	public int getSize() {
+		return this.size;
+	}
 	
 	public void insert(int value) {
 		
@@ -64,11 +68,12 @@ public class SortedArray {
 	} 
 	
 	public int binarySearch(int target) {
+		this.lastExecutionSteps = 0;
 		int left = 0;
 		int right = size -1;
 		
 		while(left <= right) { 
-			
+			lastExecutionSteps++;
 			int mid = (left + right) / 2;
 			int midValue = sortedArray[mid];
 			
@@ -81,5 +86,9 @@ public class SortedArray {
 		}
 		
 		return -1;
+	}
+	
+	public  int getSteps() {
+		return lastExecutionSteps;
 	}
 }
