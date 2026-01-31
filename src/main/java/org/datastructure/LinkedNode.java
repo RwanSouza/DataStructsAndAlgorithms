@@ -12,9 +12,8 @@ public class LinkedNode {
 		this.next = next;
 	}
 	
-	
 	public int data() {
-		return this.data;
+		return Integer.valueOf(this.data);
 	} 
 	
 	public LinkedNode next() {

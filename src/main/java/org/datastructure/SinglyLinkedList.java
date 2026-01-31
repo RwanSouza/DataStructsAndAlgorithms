@@ -78,12 +78,35 @@ public class SinglyLinkedList {
 		
 		throw new RuntimeException("No value  was found in the list");
 	}
+	
+	public int get(int index) {
+		int position=0;
+		
+		if(index < 0)
+			throw new IndexOutOfBoundsException("Index out of limits ");
+		
+		LinkedNode current = this.head;
+		
+		while(Objects.nonNull(current)) {
+			if(position == index) 
+				return current.data();
+			
+			current = current.next();
+			position++;
+		}
+		
+		throw new IndexOutOfBoundsException("Index out of limits ");
+	}
 
 	public Integer tail() {
-		return Objects.nonNull(tail) ? tail.data() : null;
+		return Objects.nonNull(tail) ? Integer.valueOf(tail.data()) : null;
 	}
 
 	public Integer head() {
-		return Objects.nonNull(head) ? head.data() : null;
+		return Objects.nonNull(head) ? Integer.valueOf(head.data()) : null;
+	}
+	
+	public boolean isEmpty() {
+		return Objects.isNull(head);
 	}
 }
