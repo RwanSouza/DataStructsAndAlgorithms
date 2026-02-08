@@ -11,8 +11,7 @@ public class Queue {
 	public Queue(int maxSize) {
 		
 		if (maxSize <= 1) 
-			throw new RuntimeException("Invalid size for a queue (must have at\n"
-					+ "least 2 elements): " + maxSize);
+			throw new RuntimeException("Invalid size for a queue (must have at least 2 elements): " + maxSize);
 		
 		this.maxSize = maxSize;
 		this.data = new int[maxSize];
@@ -38,6 +37,7 @@ public class Queue {
 		int value = data[this.front];
 		data[this.front] = 0;
 		this.front = (front + 1) % this.maxSize;
+		this.size--;
 		return value;
 	}
 	
